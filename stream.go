@@ -87,6 +87,10 @@ func (c *Client) CreateCompletionStream(
 	if err != nil {
 		return
 	}
+	if resp.StatusCode != http.StatusOK {
+		err = errors.New(resp.Status)
+		return
+	}
 
 	stream = &CompletionStream{
 		reader:   bufio.NewReader(resp.Body),
